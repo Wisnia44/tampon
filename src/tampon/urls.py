@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from antispam.views import SpamView
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url('filter/', SpamView.as_view()),
     path('', include('pages.urls')),
     path('api/pages/', include('pages.api.urls', namespace='api-pages'))
     ]
