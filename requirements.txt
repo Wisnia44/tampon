@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 contextlib2==0.6.0.post1
 cryptography==2.9.2
 cupshelpers==1.0
@@ -153,3 +154,41 @@ webencodings==0.5.1
 widgetsnbextension==3.5.1
 zipp==3.1.0
 zope.interface==5.1.0
+=======
+cryptography==2.8
+google_auth_oauthlib==0.4.1
+django_mailbox==4.8.1
+bpython==0.19
+brotli==1.0.7
+contextvars==2.4
+cx_Oracle==7.3.0
+Cython==0.29.17
+django-picklefield==2.1.1
+djangorestframework==3.11.0
+docutils==0.16
+google_api_python_client==1.8.3
+importlib_metadata==1.6.0
+ipaddr==2.2.0
+ipdb==0.13.2
+ipython==7.14.0
+keyring==21.2.1
+lockfile==0.12.2
+lxml==4.5.0
+mypy_extensions==0.4.3
+numpy==1.18.4
+ordereddict==1.1
+Pillow==7.1.2
+protobuf==3.12.0
+psycopg2==2.8.5
+pylibmc==1.6.1
+pyOpenSSL==19.1.0
+python_memcached==1.59
+pywatchman==1.4.1
+PyYAML==5.3.1
+secrets==1.0.2
+tblib==1.6.0
+toml==0.10.1
+usercustomize==1.0.0
+wincertstore==0.2
+zipp==3.1.0
+>>>>>>> features
