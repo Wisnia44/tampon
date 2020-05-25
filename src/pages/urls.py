@@ -53,6 +53,9 @@ from .views import (
     MailGetView,
     SpamListView,
     MailChangeSpamLabelView,
+
+    #TestViews
+    FilterAPITestView,
     )
 
 urlpatterns = [
@@ -88,6 +91,9 @@ urlpatterns = [
     path('<int:pk>/delete/', MailDeleteView.as_view(), name='mail-delete'),
     path('get-mail/', MailGetView.as_view(), name="get-mail"),
     path('<int:pk>/change-spam-label/', MailChangeSpamLabelView.as_view(), name='change-spam-label'),
+
+    #TestViews
+    path('test-filter-api/', FilterAPITestView.as_view(), name='test-filter'),
 
     #Other sources
     url(r'^', include('django.contrib.auth.urls')),

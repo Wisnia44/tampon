@@ -25,6 +25,8 @@ from django.views.generic import (
 
 import pickle
 import os.path
+import json
+import requests
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -327,10 +329,37 @@ class MailGetView(ListView):
 						x = mailbox[0].received_counter + 1
 						mailbox.update(received_counter=x)
 						mailbox[0].refresh_from_db()
+
+
+						#sprawdzenie maila algorytmami spamowymi
+						blacklist = Blacklist.objects.filter(mailbox=mailbox[0])
+						post_data = {
+							'email_body': msg['snippet'],
+							'email_from': headers['From'],
+							'sensitivity': mailbox[0].bayess_filter_sensibility,
+							'blacklist': blacklist
+							}
+						post_json = JSONParser().parse(post_data)
+						response = requests.post('http://127.0.0.1:8000/antispam/filter/', data=post_json)
+						content = response.content
+						print(response)
 			mailbox.update(history_id=history_id)
 			mailbox[0].refresh_from_db()
 
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+class FilterAPITestView(View):
+	def get(self, request, *args, **kwargs):
+		post_data = {'email_body': "tekst wiadomosci, tekst wiadomosci, tekst, tekst, tekst, xdd",
+						'email_from': "xdd@gmail.com",
+						'sensitivity': "low",
+						'blacklist': ["abc@gmail.com", "xd@gmail.com"]
+						}
+		post_json = json.dumps(post_data)
+		response = requests.post('http://127.0.0.1:8000/antispam/filter/', data=post_json)
+		content = response.content
+		print(content)
+		return redirect('welcome')
 
 class MailDetailView(DetailView):
 	template_name = 'pages/mail_detail.html'
