@@ -1,0 +1,87 @@
+
+/*------------CLASSES-----------*/
+
+.title {
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.body {
+    text-align: center;
+    padding: 20px;
+}
+
+.log-in-form {
+    text-align: center;
+    margin: 20px 20%;
+    padding: 10px;
+    background: #fefefe;
+}
+
+.description {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    color: #666;
+}
+
+.create-account > p {
+    display: block;
+}
+
+.create-account > ul {
+    display: none;
+}
+
+.create-account > p > label {
+    display: block;
+    text-align: inherit;
+    margin-bottom: 0px;
+}
+
+.menu {
+
+    width: 50%;
+    display: inline-block;
+    padding-bottom: 20px;
+}
+
+.menu > ul {
+    
+    list-style: none;
+}
+
+.menu > ul > li {
+    display: inline;
+    
+}
+
+.helptext {
+    display:none;
+}
+
+.list-group {
+    list-style: none;
+}
+
+.my-table {
+    background: #fff;
+}
+
+
+/*----------------IDs-------------------*/
+
+
+#auth-check {
+    display: none;
+}
+
+
+#auth-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+form {
+    text-align: center;
+}
