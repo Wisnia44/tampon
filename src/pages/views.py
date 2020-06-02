@@ -311,8 +311,14 @@ class MailGetView(ListView):
 
 	def get(self, request, *args, **kwargs):
 		creds = None
-		if os.path.exists('token.pickle'):
-			with open('token.pickle', 'rb') as token:
+		script_dir = os.path.dirname(__file__)
+		email = request.user.email.replace('@gmail.com','')
+		file_name  = "token_" + email + ".pickle"
+		file_rel_path = "tokens/" + file_name
+		file_abs_path = os.path.join(script_dir, file_rel_path)
+		print(file_abs_path)
+		if os.path.exists(file_abs_path):
+			with open(file_abs_path, 'rb') as token:
 				creds = pickle.load(token)
 		if not creds or not creds.valid:
 			if creds and creds.expired and creds.refresh_token:
@@ -323,19 +329,17 @@ class MailGetView(ListView):
 					['https://www.googleapis.com/auth/gmail.readonly']
 					)
 				creds = flow.run_local_server(port=8080)
-			with open('token.pickle', 'wb') as token:
+			with open(file_abs_path, 'wb') as token:
 				pickle.dump(creds, token)
 
+		#credentials_delegated = creds.with_subject(user[request.uder.email])
 		service = build('gmail', 'v1', credentials=creds)
-		results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute()
+		results = service.users().messages().list(userId=request.user.email, labelIds=['INBOX']).execute()
 		messages = results.get('messages', [])
 
 		if messages:
 			email = request.user.email.replace('@gmail.com','')
-			mailbox = MailBox.objects.filter(
-				name=email,
-				owner=request.user
-				)
+			mailbox = MailBox.objects.filter(name=email)
 			blacklist_2 = Blacklist.objects.filter(mailbox=mailbox[0])
 			blacklist = []
 			for element in blacklist_2:
@@ -343,7 +347,7 @@ class MailGetView(ListView):
 			history_id = mailbox[0].history_id
 			for message in messages:
 				msg = service.users().messages().get(
-					userId='me',
+					userId=request.user.email,
 					id=message['id'],
 					format="full",
 					metadataHeaders=None
@@ -357,7 +361,10 @@ class MailGetView(ListView):
 					to = headers["To"]
 					fromm = headers["From"]
 					subject = headers['Subject']
-					email_from = fromm[fromm.find('<')+1:fromm.find('>')]
+					if fromm.find('<') != -1:
+						email_from = fromm[fromm.find('<')+1:fromm.find('>')]
+					else:
+						email_from = fromm
 					print(email_from)
 					try:
 						obj = Mail.objects.get(
@@ -390,7 +397,11 @@ class MailGetView(ListView):
 							)
 						obj.save()
 						x = mailbox[0].received_counter + 1
-						mailbox.update(received_counter=x)
+						if response_content == True:
+							y = mailbox[0].spam_counter + 1
+						else:
+							y = mailbox[0].spam_counter
+						mailbox.update(received_counter=x, spam_counter=y)
 						mailbox[0].refresh_from_db()
 
 			mailbox.update(history_id=history_id)
