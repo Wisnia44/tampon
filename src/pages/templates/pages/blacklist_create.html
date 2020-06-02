@@ -2,12 +2,22 @@
 
 {% block content %}
 
-<form action='.' method='POST'>{% csrf_token %}
-	{{ form.as_p }}
-	<input type='submit' value='Zapisz' />
-</form>
+<section style="margin-top: 5%;">
 
-<p><a href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
+	<form action='.' method='POST'>{% csrf_token %}
+		
+		<h4>Podaj adres który chesz dodać do czarnej listy</h4>
+		<br/>
+		{{ form.as_p }}
+		<input class="btn btn-success" type='submit' value='Zapisz' />
+	</form>
+
+</section>
+
+<br/>
+<a class="btn btn-outline-secondary" href="#" onclick="javascript:window.history.back(-1);return false;">
+	Powrót
+</a>
 
 
 

@@ -1,11 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<body class="body">
+	
+	<header>
+		<h1 class="title">TAMP-on</h1>
+		<h6 class="description">TAMP-on to skrzynka antyspamowa wykorzystująca dwa rodzaje silników (Filtr Bayesa oraz czarną listę) pozwalających wyłapywać niechciane wiadomości email.</h6>
+	</header>
+	<br/>
+	
+	<main>
 
-	<h1>TAMP-on web app</h1>
-	<p>O nas: bla bla bla</p>
-	<p><a href="{% url 'user-login' %}">Zaloguj się</a></p>
-	<p><a href="{% url 'signup' %}">Nie masz konta? Zarejestruj się</a></p>
-	<p><a href="{% url 'home' %}">Jesteś zalogowany? Przejdź do aplikacji</a><p>
+		<section id="auth-section" class="container-fluid">
+			<h5><a class="btn btn-primary btn-lg" href="{% url 'user-login' %}">Zaloguj się</a></h5>
 
+			<h6><a class="btn btn btn-outline-secondary" href="{% url 'signup' %}">Nie masz konta? Zarejestruj się</a></h6>
+
+			<h5><a class="btn btn-outline-primary" href="{% url 'home' %}">Jesteś zalogowany? Przejdź do aplikacji</a></h5>
+		</section>
+		<br/><br/><br/><br/>
+
+		<footer class="footer text-left">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm">
+						<h4 class="font-weight-normal">Jak to działa?</h4>
+						<p class="font-weight-light">Pierwszym zastosowanym rozwiązaniem jest naiwny klasyfikator bayesa bazujący na algorytmach sztucznej inteligencji. Z wykorzystaniem rachunku prawdopodobieństwa oraz twierdzenia Bayesa pozwala wydajnie wykrywać niechciane wiadomości. 
+							Drugą techniką wykorzystywaną przez naszą skrzynkę jest Czarna Lista, która wedle życzenia użytkownika blokuje wszystkie wiadomości od wybranego przez użytkownika adresu email.</p>
+					</div>
+					<div class="col-sm">
+						<h4 class="font-weight-normal">O nas:</h4>
+						<p class="font-weight-light">Jesteśmy grupą studentów którzy stawiają swoje pierwsze kroki w tworzeniu aplikacji webowych. W ramach nauki i projektu grupowego stworzyliśmy własną skrzynkę mailową TAMP-on.</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+
+
+	</main>
+
+</body>
 {% endblock %}

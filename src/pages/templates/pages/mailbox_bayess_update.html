@@ -2,10 +2,18 @@
 
 {% block content %}
 
-<form action='.' method='POST'>{% csrf_token %}
-	{{ form.as_p }}
-	<input type='submit' value='Zapisz' />
-</form>
-<p><a href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
+<h4 class="description">Zmiana czułości filtru Bayesa</h4>
+<br/>
+
+
+	<form id="bayes-change" action='.' method='POST'>{% csrf_token %}
+		{{ form.as_p }}
+		<input type='submit' value='Zapisz' />
+	</form>
+	<br/>
+
+<a class="btn btn-outline-secondary" href="#" onclick="javascript:window.history.back(-1);return false;">
+	Powrót
+</a>
 
 {% endblock %}

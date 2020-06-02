@@ -1,21 +1,54 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<h1>Ustawienia antyspamowe</h1>
-	<h3>Twoje ustawienia czułości filtru Bayessa:</h3>
-	<p>{{object.bayess_filter_sensibility}}   <a href="bayess-update/">Edytuj</a></p>
-	<h3>Twoja czarna lista:</h3>
- 		{% if blacklist %}
-			{% for item in blacklist %}
-				<p>- {{item.address}}
-					<a href="../../blacklist/{{item.pk}}/update/">Edytuj</a>
-					<a href="../../blacklist/{{item.pk}}/delete/">Usuń</a>
-				</p>
-			{% endfor %}
-		{% else %}
-			<p>Twoja czarna lista jest pusta</p>
-		{% endif %} 
-	<p><a href="../../blacklist/create/">Dodaj nowy adres</a></p>
 
-	<p><a href="{% url 'home' %}">Powrót do strony głównej</a><p>
-{% endblock %}s
+	<h2 style="margin-top:3%;">Ustawienia antyspamowe</h2>
+
+	<div id="spam-settings-box" class="container" style="background-color:white;">
+		
+<!--Czułość bayesa-->
+		<section id="bayes-settings">
+			<h4>Twoje ustawienia czułości filtru Bayesa:</h4>
+
+			Czułość: {{object.bayess_filter_sensibility}}
+			<p style="padding-top: 5px;"><a class="btn btn-primary btn-sm" href="bayess-update/">Edytuj</a></p>
+		</section>
+
+<!--Czarna lista-->
+		
+		<section>
+			<h4>Twoja czarna lista:</h4>
+
+			<div id="spam-address-list">
+				{% if blacklist %}
+					{% for item in blacklist %}
+						<p id="spam-address">- {{item.address}}
+							<a class="btn btn-outline-primary btn-sm" href="../../blacklist/{{item.pk}}/update/">
+								Edytuj
+							</a>
+							<a class="btn btn-outline-danger btn-sm" href="../../blacklist/{{item.pk}}/delete/">
+								Usuń
+							</a>
+						</p>
+					{% endfor %}
+				{% else %}
+					<p>Twoja czarna lista jest pusta</p>
+				{% endif %} 
+			</div>
+
+			
+			<a style="margin-bottom: 4px;" class="btn btn-primary btn-sm" href="../../blacklist/create/">
+				Dodaj nowy adres
+			</a>
+		
+		</section>
+		
+	</div>
+	<br/>
+
+	<a class="btn btn-outline-secondary" href="{% url 'home' %}">
+		Powrót do strony głównej
+	</a> 
+	
+
+{% endblock %}

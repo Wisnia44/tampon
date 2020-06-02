@@ -1,20 +1,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
-		<h1> Twój mail: </h1>
-		<p> Od: {{ object.from_header }} </p>
-		<p> Do: {{ object.to_header }} </p>
-		<h2> Temat: {{ object.subject }} </h2>
-		<p> {{object.snippet}} </p>
-		{% if object.spam == True %}
-			<p> Ten mail to SPAM </p>
-			<p><a href='../{{object.id}}/change-spam-label/'>To nie jest SPAM</a><p>
-		{% else %}
-			<p> Ten mail to nie jest SPAM </p>
-			<p><a href='../{{object.id}}/change-spam-label/'>Oznacz jako SPAM</a><p>
-		{% endif %}
+	<h1> Tamp-on </h1>
+	<br/>
+
+<!-- widok maila -->
+	<div class="email container-fluid text-left" style="width: 85%">
+		<div class="row">
+			<div class="col-2">
+				<p class="text-white-bg">Nadawca:</p>
+			</div>
+			<div class="col-8 " >
+				<p class="text-white-bg align-middle">{{ object.from_header }} </p>
+			</div>
+
+			<div class="col-2 ">
+				<a class="btn btn-danger " 
+				href='../{{object.id}}/delete/'>Usuń</a>
+			</div>
+			
+		</div>
+
+
 	
-	<p><a href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
-	<p><a href='../{{object.id}}/delete/'>Usuń tego maila</a><p>
-	<p><a href="{% url 'home' %}">Powrót do strony głównej</a><p>
+		<div class="row">
+			<div class="col-2">
+				<p class="text-white-bg font-weight-bold"> Temat: </p>
+			</div>
+			<div class="col-10 " >
+				<p class="text-white-bg font-weight-bold">{{ object.subject }} </p>
+			</div>
+		
+
+		</div>
+		
+
+		<div class="row">
+			<div class="col mail-container" >
+			<p class="mail-content text-white-bg ">{{object.snippet}} </p>
+		</div>
+		
+	</div>
+		
+
+
+	<div class="container-fluid text-left center">
+		<!-- spam check -->
+		<div class="row">
+			<div class="col-4">
+				{% if object.spam == True %}
+				Ten mail to SPAM
+				{% else %}
+				<p>Ten mail to nie jest SPAM </p> 
+				{% endif %}
+			</div>
+
+			<div class="col-4">
+				{% if object.spam == True %}
+				<a class="btn btn-warning btn-sm" href='../{{object.id}}/change-spam-label/'>To nie jest SPAM</a>
+				{% else %}
+				<a class="btn btn-warning btn-sm" href='../{{object.id}}/change-spam-label/'>Oznacz jako SPAM</a>
+				{% endif %}
+			</div>
+		</div>
+
+
+		<!-- powrót do menu -->
+		<div class="row">
+			<div class="col">
+				<p><a class="btn btn-primary" href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col">
+				<p><a class="btn btn-outline-secondary" href="{% url 'home' %}">Powrót do strony głównej</a><p>
+			</div>
+
+		</div>
+
+	</div>
+	
+
 {% endblock %}

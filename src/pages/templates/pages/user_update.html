@@ -2,11 +2,19 @@
 
 {% block content %}
 
-	<form method="POST">
+
+	<header>
+		<h1 class="title">TAMP-on</h1>
+	</header>
+
+	<form class="log-in-form" method="POST">
+
+		<h5 class="description">Podaj nowe dane</h5>
+		<br/>
 		{% csrf_token %}
 		{{ form.as_p }}
-		<input type="submit" value="Uaktualnij dane" class="btn btn-outline-success">
+		<input type="submit" value="Uaktualnij dane" class="btn btn-success">
 	</form>
-	<p><a href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
+	<a class="btn btn-outline-secondary" href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a>
 
-{% endblock %}
+{% endblock %} 

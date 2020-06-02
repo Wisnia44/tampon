@@ -2,15 +2,25 @@
 
 {% block content %}
 
-	<form method="POST">
+
+	<header>
+		<h1 class="title">TAMP-on</h1>
+	</header>
+
+
+	<form class="create-account log-in-form " method="POST">
+
+		<h4 class="description">Zarejestruj się</h4>
+		<br/>
+
 		{% csrf_token %}
 		{{ form.as_p }}
 
-		<input type="submit" value="Utwórz konto" class="btn btn-outline-success">
-		<p>-- OR --</p>
+		<input type="submit" value="Utwórz konto" class="btn btn-success">
+		<br/><br/>lub
 		<a href="{% url 'social:begin' 'google-oauth2' %}">
 			<button type="button" name="button" class="btn btn-danger">Zarejestruj się przez konto Google</button>
 		</a>
 	</form>
 
-{% endblock %}a
+{% endblock %}

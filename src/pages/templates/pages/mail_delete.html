@@ -2,11 +2,31 @@
 
 {% block content %}
 
-	<form action='.' method="POST">{% csrf_token %}
-		<h2>Czy jesteś pewien, że chcesz usunąć tego maila? </h2>
-		<p>Tytuł: {{ object.subject }}</p>
-		<p>Od: {{object.from_header}}?</p>
-		<p><input type='submit' value='Tak' />  <a href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
-	</form>
+	<section id="mail-delete-container" class="">
+		<form action='.' method="POST">{% csrf_token %}
+
+			<h4>Czy jesteś pewien, że chcesz usunąć tego maila? </h4>
+			<br/>
+<!--		<p>Tytuł: {{ object.subject }}</p>
+			<p>Od: {{object.from_header}}?</p>-->
+
+
+
+
+			<div class="row">
+				<div class="col" style="text-align:right; margin-right: 10px;">
+					<input class="btn btn-success" type='submit' value='Tak' />
+				</div>
+	
+				<div class="col" style="text-align:left;">
+					<a class="btn btn-danger" href="#" onclick="javascript:window.history.back(-1);return false;">Nie</a>
+				</div>
+
+			</div>
+		</form>
+
+	</section>
+		
+	
 
 {% endblock %}

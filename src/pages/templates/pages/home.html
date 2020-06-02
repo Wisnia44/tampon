@@ -1,18 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<h1>TAMP-on web app</h1>
-	<p><a href="{% url 'mail-list' %}">Twoje maile</a><p>
-	<p><a href="{% url 'spam-list' %}">Twój spam</a><p>
-	<p><a href="../spam-stats/{{mailbox.id}}/">Statystyki antyspamowe</a></p>
-	<p><a href="../spam-settings/{{mailbox.id}}/">Ustawienia antyspamowe</a></p>
-	<p><a href="{% url 'user-update' %}">Zmień swoje dane</a></p>
-	<p><a href="{% url 'change-password' %}">Zmień hasło</a></p>
-	<p><a href="{% url 'user-delete' %}">Usuń swoje konto</a></p>
-	
+	<header>
+		<h1 class="title">TAMP-on</h1>
+	</header>
 
+	<section class="menu">
+		<ul class="list-group">
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="{% url 'mail-list' %}">Twoje maile</a></li>
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="{% url 'spam-list' %}">Twój spam</a></li>
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="../spam-stats/{{mailbox.id}}/">Statystyki antyspamowe</a></li>
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="../spam-settings/{{mailbox.id}}/">Ustawienia antyspamowe</a></li>
+			<li><a class="list-group-item list-group-item-action" 
+				href="{% url 'user-update' %}">Zmień swoje dane</a></li>
+			<li><a class="list-group-item list-group-item-action" 
+				href="{% url 'change-password' %}">Zmień hasło</a></li>
+			<li><a class="list-group-item list-group-item-action" 
+				href="{% url 'user-delete' %}">Usuń swoje konto</a></li>
+		</ul>
+	</section>
+
+	<br/>
 	<form class="logout-link" action="{% url 'logout' %}" method="post">
 		{% csrf_token %}
-		<button type="submit">Wyloguj się</button>
+		<button class="btn btn-outline-dark" type="submit">Wyloguj się</button>
 	</form>
 {% endblock %}

@@ -1,11 +1,64 @@
 {% extends 'base.html' %}
 
-{% block content %}
-	<h1>Statystki spamowe</h1>
-
-	<p>Odebrałeś już {{object.received_counter}} wiadomości</p>
-	<p>w tym {{object.spam_counter}} oznaczonych jako SPAM.</p>
+{% block scripts %}
+<script>
+$(document).ready(function(){
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var myChart = new Chart(ctx, {
+		type: 'pie',
+		data: {
+			labels: ['SPAM', 'nie SPAM'],
+			datasets: [{
+				label: 'liczba wiadomości',
+				data: [ {{object.spam_counter}}, {{object.received_counter}}-{{object.spam_counter}}],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
 	
+			}
+		}
+	});
+});
+</script>
+{% endblock scripts %}
 
-	<p><a href="{% url 'home' %}">Powrót do strony głównej</a><p>
-{% endblock %}s
+
+{% block content %}
+<script>
+	$(document).ready(function(){
+		console.log("ilość", {{object.received_counter}}/10);
+});
+</script>
+
+	<section class="log-in-form">
+		<h1>Statystki spamowe</h1>
+
+		<div class="row" style="margin: 20px 10%">
+			<div class="col-sm-4">
+				<p style="margin-top: 20px; margin-bottom: 0px;">
+					Odebrałeś już {{object.received_counter}} wiadomości</p>
+				<p>w tym {{object.spam_counter}} oznaczonych jako SPAM.</p>
+			</div>
+			<div class="col-sm-8">
+					<canvas id="myChart"></canvas>
+			</div>
+		</div>
+	
+		<br/>
+
+	</section>
+
+	<a class="btn btn-outline-secondary" href="{% url 'home' %}">
+		Powrót do strony głównej
+	</a>
+{% endblock %}

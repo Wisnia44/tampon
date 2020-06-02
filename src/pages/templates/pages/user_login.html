@@ -2,25 +2,35 @@
 
 {% block content %}
 
-	<form method="POST">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Zaloguj się" class="btn btn-outline-success">
-		<p></p>
-		<p></p>
+	
+	<header>
+		<h1 class="title">TAMP-on</h1>
+	</header>
+	
 
-		<small>
-			<p><a href="{% url 'signup' %}">Nie masz konta? Zarejestruj się</a></p>
-			<p><a href="{% url 'password_reset' %}">Zapomniałeś hasła?</a></p>
-		</small>
-		<p></p>
-		<p></p>
+	<section class="log-in-form">
+		<h4 class="description">Zaloguj się</h4>
+		<br/>
 
-		<p>lub
-			<a href="{% url 'social:begin' 'google-oauth2' %}">
-				<button type="button" name="button" class="btn btn-danger">Zaloguj się przez konto Google</button>
-			</a>
-		</p>
-	</form>
+		<form class="create-account" method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Zaloguj się" class="btn btn-success">
+			<br/><br/>
+
+			<small>
+				<p><a href="{% url 'signup' %}">Nie masz konta? Zarejestruj się</a></p>
+				<p><a href="{% url 'password_reset' %}">Zapomniałeś hasła?</a></p>
+			</small>
+			
+			<p>
+				<a href="{% url 'social:begin' 'google-oauth2' %}">
+					<button type="button" name="button" class="btn btn-danger">Zaloguj się przez konto Google</button>
+				</a>
+			</p>
+		</form>
+	</section>
+
+  
 
 {% endblock %}

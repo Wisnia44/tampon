@@ -2,11 +2,33 @@
 
 {% block content %}
 
-	<form action='.' method="POST">{% csrf_token %}
-		<h1>Czy na pewno chcesz usunąć ten adres z Czarnej Listy?</h1>
-		<p><input type='submit' value='Tak' />  <a href="{% url 'home' %}">Powrót</a></p>
-	</form>
-	
-	<p><a href="#" onclick="javascript:window.history.back(-1);return false;">Powrót</a></p>
 
-{% endblock %}
+<section id="mail-delete-container" class="">
+
+
+
+	<form action='.' method="POST">{% csrf_token %}
+
+		<h4>Czy na pewno chcesz usunąć ten adres z Czarnej Listy?</h4>
+		<br/>
+
+		<div class="row">
+			<div class="col" style="text-align:right; margin-right: 10px;">
+				<input class="btn btn-success" type='submit' value='Tak' />
+			</div>
+
+			<div class="col" style="text-align:left;">
+				<a class="btn btn-danger" href="#" onclick="javascript:window.history.back(-1);return false;">
+					Nie
+				</a>
+			</div>
+
+		</div>
+	</form>
+
+</section>
+
+
+
+	
+{% endblock %} 

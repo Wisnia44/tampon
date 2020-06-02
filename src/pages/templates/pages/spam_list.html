@@ -2,17 +2,123 @@
 
 {% block content %}
 
-<p><a href="{% url 'get-mail' %}">Pobierz pocztę</a><p>
-<p><a href="{% url 'home' %}">Powrót do strony głównej</a><p>
 
-<h2> Twój spam </h2>
-{% for mail in object_list %}
-	<ul>
-		<li> 
-			<a href="../{{mail.id}}/"> {{ mail.subject }} </a>
-			<p>Od:  {{ mail.from_header }} </p>
-		</li>
-	</ul>
-{% endfor %}
+<header>
+	<h1 class="title" >TAMP-on</h1>
+</header> 
+<br/>
+
+
+
+<div class="container-fluid">
+	<div class="row">
+
+		<!--MENU po lewej-->
+		<div class="col-md-2" style="padding-bottom: 15px;">
+			<section class="menu-small">
+				<ul class="list-group" style="text-align: left;">
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="{% url 'mail-list' %}">Twoje maile</a></li>
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="{% url 'spam-list' %}">Twój spam</a></li>
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="../spam-stats/{{mailbox.id}}/">Statystyki antyspamowe</a></li>
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="../spam-settings/{{mailbox.id}}/">Ustawienia antyspamowe</a></li>
+					<li><a class="menu-font list-group-item list-group-item-action" 
+						href="{% url 'user-update' %}">Zmień swoje dane</a></li>
+					<li><a class="menu-font list-group-item list-group-item-action" 
+						href="{% url 'change-password' %}">Zmień hasło</a></li>
+					<li><a class="menu-font list-group-item list-group-item-action" 
+						href="{% url 'user-delete' %}">Usuń swoje konto</a></li>
+				</ul>
+			</section>	
+		</div>
+
+	
+		<!--LISTA maili po lewej-->
+			<div class="col">
+				<div class="row">
+					<div class="col-sm-3">
+						<h2> Twój spam </h2>
+					</div>
+					<div class="col-sm-5">
+						<a class="list-group-item list-group-item-action list-group-item-primary" 
+								href="{% url 'get-mail' %}">Pobierz pocztę</a>
+					</div>
+				</div>
+				
+				<br/>
+
+				<div class="table table-responsive">
+					<table class="table table-hover table-bordered my-table">
+						<tbody >
+
+							{% for mail in object_list %}
+								<tr>
+									<td style="width:25%" scope="row">
+										<div class="small font-weight-bold" >
+											{{ mail.from_header }}
+										</div>
+									</td>
+				
+									<td style="width:70%">
+										<a class="font-weight-bold" href="../{{mail.id}}/"> 
+											{{ mail.subject }} 
+										</a>
+									</td>				
+								</tr>
+							{% endfor %}
+				
+						</tbody>
+					</table>
+				</div>
+
+		</div>
+	</div>	
+</div>
+
+<!--
+<div class="row">
+	<div class="col-sm-3">
+		<h2> Twój spam </h2>
+	</div>
+	<div class="col-sm-3">
+		<a class="list-group-item list-group-item-action list-group-item-primary" 
+			href="{% url 'get-mail' %}">Pobierz pocztę</a>
+	</div>
+</div>
+<br/>
+
+
+<div class="row">
+	<div class="table table-responsive">
+		<tbody >
+
+			{% for mail in object_list %}
+				<tr>
+					<td style="width:25%" scope="row">
+						<div class="small font-weight-bold" >
+							{{ mail.from_header }}
+						</div>
+					</td>
+
+					<td style="width:70%">
+						<a class="font-weight-bold" href="../{{mail.id}}/"> 
+							{{ mail.subject }} 
+						</a>
+					</td>				
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</div>
+	
+</div>  -->
+
+
+<a class="btn btn-outline-secondary" href="{% url 'home' %}">
+	Powrót do strony głównej
+</a>
 
 {% endblock %}
