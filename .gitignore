@@ -1,4 +1,4 @@
 #Dont track these files
 config.py
 credentials.json
-pages/tokens/
+tokens/
