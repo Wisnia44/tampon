@@ -4,46 +4,82 @@
 
 	<h2 style="margin-top:3%;">Ustawienia antyspamowe</h2>
 
-	<div id="spam-settings-box" class="container" style="background-color:white;">
-		
-<!--Czułość bayesa-->
-		<section id="bayes-settings">
-			<h4>Twoje ustawienia czułości filtru Bayesa:</h4>
+	<div class="container">
+		<div class="row">
 
-			Czułość: {{object.bayess_filter_sensibility}}
-			<p style="padding-top: 5px;"><a class="btn btn-primary btn-sm" href="bayess-update/">Edytuj</a></p>
-		</section>
-
-<!--Czarna lista-->
-		
-		<section>
-			<h4>Twoja czarna lista:</h4>
-
-			<div id="spam-address-list">
-				{% if blacklist %}
-					{% for item in blacklist %}
-						<p id="spam-address">- {{item.address}}
-							<a class="btn btn-outline-primary btn-sm" href="../../blacklist/{{item.pk}}/update/">
-								Edytuj
-							</a>
-							<a class="btn btn-outline-danger btn-sm" href="../../blacklist/{{item.pk}}/delete/">
-								Usuń
-							</a>
-						</p>
-					{% endfor %}
-				{% else %}
-					<p>Twoja czarna lista jest pusta</p>
-				{% endif %} 
+			<!--MENU po lewej-->
+			<div class="col-lg-2" style="padding-bottom: 15px;">
+				<section class="menu-small">
+					<ul class="list-group" style="text-align: left;">
+						<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+							href="{% url 'mail-list' %}">Twoje maile</a></li>
+						<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+							href="{% url 'spam-list' %}">Twój spam</a></li>
+						<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+							href="../spam-stats/{{mailbox.id}}/">Statystyki antyspamowe</a></li>
+						<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+							href="../spam-settings/{{mailbox.id}}/">Ustawienia antyspamowe</a></li>
+						<li><a class="menu-font list-group-item list-group-item-action" 
+							href="{% url 'user-update' %}">Zmień swoje dane</a></li>
+						<li><a class="menu-font list-group-item list-group-item-action" 
+							href="{% url 'change-password' %}">Zmień hasło</a></li>
+						<li><a class="menu-font list-group-item list-group-item-action" 
+							href="{% url 'user-delete' %}">Usuń swoje konto</a></li>
+					</ul>
+				</section>	
 			</div>
 
-			
-			<a style="margin-bottom: 4px;" class="btn btn-primary btn-sm" href="../../blacklist/create/">
-				Dodaj nowy adres
-			</a>
+			<!--USTAWIENIA-->
+			<div class="col-lg-10">
+				<div id="spam-settings-box" class="container" style="background-color:white;">
 		
-		</section>
-		
+					<!--Czułość bayesa-->
+							<section id="bayes-settings">
+								<h4>Twoje ustawienia czułości filtru Bayesa:</h4>
+					
+								Czułość: {{object.bayess_filter_sensibility}}
+								<p style="padding-top: 5px;"><a class="btn btn-primary btn-sm" href="bayess-update/">Edytuj</a></p>
+							</section>
+					
+					<!--Czarna lista-->
+							 
+							<section>
+								<h4>Twoja czarna lista:</h4>
+					
+								<div id="spam-address-list">
+									{% if blacklist %}
+										{% for item in blacklist %}
+											<p id="spam-address">- {{item.address}}
+												<a class="btn btn-outline-primary btn-sm" href="../../blacklist/{{item.pk}}/update/">
+													Edytuj
+												</a>
+												<a class="btn btn-outline-danger btn-sm" href="../../blacklist/{{item.pk}}/delete/">
+													Usuń
+												</a>
+											</p>
+										{% endfor %}
+									{% else %}
+										<p>Twoja czarna lista jest pusta</p>
+									{% endif %} 
+								</div>
+					
+								
+								<a style="margin-bottom: 4px;" class="btn btn-primary btn-sm" href="../../blacklist/create/">
+									Dodaj nowy adres
+								</a>
+							
+							</section>
+							
+						</div>
+
+			</div>
+
+		</div>
 	</div>
+
+
+
+	
 	<br/>
 
 	<a class="btn btn-outline-secondary" href="{% url 'home' %}">

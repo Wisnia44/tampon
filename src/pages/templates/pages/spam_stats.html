@@ -34,29 +34,58 @@ $(document).ready(function(){
 
 
 {% block content %}
-<script>
-	$(document).ready(function(){
-		console.log("ilość", {{object.received_counter}}/10);
-});
-</script>
 
-	<section class="log-in-form">
-		<h1>Statystki spamowe</h1>
+<div class="container">
+	<div class="row">
 
-		<div class="row" style="margin: 20px 10%">
-			<div class="col-sm-4">
-				<p style="margin-top: 20px; margin-bottom: 0px;">
-					Odebrałeś już {{object.received_counter}} wiadomości</p>
-				<p>w tym {{object.spam_counter}} oznaczonych jako SPAM.</p>
-			</div>
-			<div class="col-sm-8">
-					<canvas id="myChart"></canvas>
-			</div>
+		<!--MENU po lewej-->
+		<div class="col-lg-3" style="padding-bottom: 15px;">
+			<section class="menu-small">
+				<ul class="list-group" style="text-align: left;">
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="{% url 'mail-list' %}">Twoje maile</a></li>
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="{% url 'spam-list' %}">Twój spam</a></li>
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="../spam-stats/{{mailbox.id}}/">Statystyki antyspamowe</a></li>
+					<li><a class="menu-font font-weight-bold list-group-item list-group-item-action" 
+						href="../spam-settings/{{mailbox.id}}/">Ustawienia antyspamowe</a></li>
+					<li><a class="menu-font list-group-item list-group-item-action" 
+						href="{% url 'user-update' %}">Zmień swoje dane</a></li>
+					<li><a class="menu-font list-group-item list-group-item-action" 
+						href="{% url 'change-password' %}">Zmień hasło</a></li>
+					<li><a class="menu-font list-group-item list-group-item-action" 
+						href="{% url 'user-delete' %}">Usuń swoje konto</a></li>
+				</ul>
+			</section>	
 		</div>
-	
-		<br/>
 
-	</section>
+		<div class="col">
+			<section class="log-in-form">
+				<h1>Statystki spamowe</h1>
+		
+				<div class="row" style="margin: 20px">
+					<div class="col-sm-4">
+						<p class="h5" style="margin-top: 20px; margin-bottom: 0px;">
+							Odebrałeś już {{object.received_counter}} wiadomości</p>
+						<p class="h5">w tym {{object.spam_counter}} oznaczonych jako SPAM.</p>
+					</div>
+					<div class="col-sm-8">
+							<canvas id="myChart"></canvas>
+					</div>
+				</div>
+			
+				<br/>
+		
+			</section>
+
+		</div>
+
+
+	</div>
+</div>
+
+	
 
 	<a class="btn btn-outline-secondary" href="{% url 'home' %}">
 		Powrót do strony głównej

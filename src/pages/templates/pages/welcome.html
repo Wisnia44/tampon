@@ -12,9 +12,15 @@
 	<main>
 
 		<section id="auth-section" class="container-fluid">
-			<h5><a class="btn btn-primary btn-lg" href="{% url 'user-login' %}">Zaloguj się</a></h5>
-
-			<h6><a class="btn btn btn-outline-secondary" href="{% url 'signup' %}">Nie masz konta? Zarejestruj się</a></h6>
+			<h5>
+				<a href="{% url 'social:begin' 'google-oauth2' %}">
+					<button type="button" name="button" class="btn btn-primary btn-lg">Zaloguj się przez konto Google</button>
+				</a>
+			</h5>
+			
+			<h6><a href="{% url 'social:begin' 'google-oauth2' %}">
+				<button type="button" name="button" class="btn btn-outline-secondary">Zarejestruj się przez konto Google</button>
+			</a></h6>
 
 			<h5><a class="btn btn-outline-primary" href="{% url 'home' %}">Jesteś zalogowany? Przejdź do aplikacji</a></h5>
 		</section>
