@@ -47,24 +47,93 @@
 	<div class="container-fluid text-left center">
 		<!-- spam check -->
 		<div class="row">
-			<div class="col-4">
+			<div id="spam-check-writing" class="col-4">
 				{% if object.spam == True %}
-				Ten mail to SPAM
+				<p>Ten mail to SPAM</p>
 				{% else %}
 				<p>Ten mail to nie jest SPAM </p> 
 				{% endif %}
 			</div>
 
-			<div class="col-4">
+			<div class="col-7">
 				{% if object.spam == True %}
 				<a class="btn btn-warning btn-sm" href='../{{object.id}}/change-spam-label/'>To nie jest SPAM</a>
 				{% else %}
 				<a class="btn btn-warning btn-sm" href='../{{object.id}}/change-spam-label/'>Oznacz jako SPAM</a>
 				{% endif %}
+				<button id="test-button" class="btn btn-info btn-sm">Przetestuj wiadomość ponownie</button>
+
 			</div>
 		</div>
 
 
+		<script>
+
+			/*spam send */
+			function loadSpam() {
+					var xhttp = new XMLHttpRequest();
+					var csrftoken = Cookies.get('csrftoken');
+
+					xhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+								
+								if (this.response==0) {
+									document.getElementById("spam-check-writing").innerHTML = "Ponowny test wykazał że to nie SPAM"
+								}else{
+									document.getElementById("spam-check-writing").innerHTML = "Ponowny test wykazał że to SPAM"
+								}
+								console.log(this.response);
+						}
+					};
+
+					/*czyszcenie stringa snippet*/
+					var snippet_str = "{{object.snippet}}";
+
+					/*czyszczenie stringa email*/
+					var str = "{{ object.from_header }}";
+					if (str.lastIndexOf("&lt;") >= 0)
+					{
+						var clearMail = str.substring(
+							str.lastIndexOf("&lt;") + 4, 
+							str.lastIndexOf("&gt;")
+						);
+					}
+					else
+					{
+						var clearMail = "{{ object.from_header }}";
+					}
+					var email_str = clearMail;
+
+					/*czyszcenie stringa sensitivity*/
+					var sensitivity_str = "{{sensitivity}}";
+
+					/*czyszczenie stringa blacklist*/
+					var str1 = "{{blacklist}}"
+					while(str1.lastIndexOf("&#x27;") > 0)
+					{
+						str1 = str1.replace("&#x27;","\"");
+					}
+					blacklist_str = str1
+
+					/*zmienna wysylana do filtra*/
+					var toSend = "{\"email_body\": \"" + snippet_str +"\", \"email_from\": \"" + email_str +"\",\"sensitivity\": \"" + sensitivity_str + "\", \"blacklist\": " + blacklist_str + "}";
+
+					console.log(toSend);
+					
+					xhttp.open("POST", "http://127.0.0.1:8000/antispam/filter/", true);
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.setRequestHeader('X-CSRFToken', csrftoken);
+					xhttp.send(toSend);
+				};
+			
+			var btn = document.getElementById("test-button");
+			btn.addEventListener("click", loadSpam) ;
+
+		</script>
+
+
+
+		<br/>
 		<!-- powrót do menu -->
 		<div class="row">
 			<div class="col">

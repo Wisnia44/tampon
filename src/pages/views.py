@@ -425,7 +425,24 @@ class FilterAPITestView(View):
 
 class MailDetailView(DetailView):
 	template_name = 'pages/mail_detail.html'
-	queryset = Mail.objects.all()
+
+	def get_queryset(self):
+		return Mail.objects.all()
+
+	
+	def get_context_data(self, **kwargs):
+		context = super(MailDetailView, self).get_context_data(**kwargs)
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
+		context['sensitivity'] = mailbox.bayess_filter_sensibility 
+		blacklist_2 = Blacklist.objects.filter(mailbox=mailbox)
+		blacklist = []
+		for element in blacklist_2:
+			blacklist.append(element.address)
+		context['blacklist'] = blacklist
+		return context
 
 class MailDeleteView(DeleteView):
 	template_name = 'pages/mail_delete.html'
