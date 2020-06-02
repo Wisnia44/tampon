@@ -17,8 +17,6 @@ def spamFilter(email_body, email_from, sensitivity, blacklist):
     if email_from in blacklist:
         return 1
     path = pathlib.Path("spam.csv").absolute()
-    print(path)
-    print(type(path))
     df = pd.read_csv(path, encoding="latin-1")
     df.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1, inplace=True)
     df["label"] = df["v1"].map({"ham": 0, "spam": 1})

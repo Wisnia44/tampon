@@ -336,6 +336,10 @@ class MailGetView(ListView):
 				name=email,
 				owner=request.user
 				)
+			blacklist_2 = Blacklist.objects.filter(mailbox=mailbox[0])
+			blacklist = []
+			for element in blacklist_2:
+				blacklist.append(element.address)
 			history_id = mailbox[0].history_id
 			for message in messages:
 				msg = service.users().messages().get(
@@ -350,23 +354,38 @@ class MailGetView(ListView):
 					headers[header['name']] = header['value']
 				if int(msg['historyId'])>mailbox[0].history_id:
 					history_id  = max(int(msg['historyId']),history_id)
+					to = headers["To"]
+					fromm = headers["From"]
+					subject = headers['Subject']
+					email_from = fromm[fromm.find('<')+1:fromm.find('>')]
+					print(email_from)
 					try:
 						obj = Mail.objects.get(
 							mailbox_id=mailbox[0].id,
-							subject=headers['Subject'],
-							from_header=headers['From'],
-							to_header=headers['Delivered-To']
+							subject=subject,
+							from_header=fromm,
+							to_header=to
 							)
 					except Mail.DoesNotExist:
+						url = 'http://127.0.0.1:8000/antispam/filter/'
+						headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+						post_data = {'email_body': msg['snippet'],
+							'email_from': email_from,
+							'sensitivity': mailbox[0].bayess_filter_sensibility,
+							'blacklist': blacklist
+							}
+						post_json = json.dumps(post_data)
+						response = requests.post(url, data=post_json, headers=headers)
+						response_content = bool(int(str(response.content, 'utf-8')))
 						obj = Mail(
 							mailbox_id=mailbox[0].id,
-							subject=headers['Subject'],
-							from_header=headers['From'],
-							to_header=headers['Delivered-To'],
+							subject=subject,
+							from_header=fromm,
+							to_header=to,
 							message_id=msg['id'],
 							body=msg['payload']['body'],
 							#eml=msg['raw'],
-							spam=False,
+							spam=response_content,
 							snippet=msg['snippet']
 							)
 						obj.save()
@@ -374,19 +393,6 @@ class MailGetView(ListView):
 						mailbox.update(received_counter=x)
 						mailbox[0].refresh_from_db()
 
-
-						#sprawdzenie maila algorytmami spamowymi
-						blacklist = Blacklist.objects.filter(mailbox=mailbox[0])
-						post_data = {
-							'email_body': msg['snippet'],
-							'email_from': headers['From'],
-							'sensitivity': mailbox[0].bayess_filter_sensibility,
-							'blacklist': blacklist
-							}
-						post_json = JSONParser().parse(post_data)
-						response = requests.post('http://127.0.0.1:8000/antispam/filter/', data=post_json)
-						content = response.content
-						print(response)
 			mailbox.update(history_id=history_id)
 			mailbox[0].refresh_from_db()
 
@@ -394,15 +400,16 @@ class MailGetView(ListView):
 
 class FilterAPITestView(View):
 	def get(self, request, *args, **kwargs):
+		url = 'http://127.0.0.1:8000/antispam/filter/'
+		headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
 		post_data = {'email_body': "tekst wiadomosci, tekst wiadomosci, tekst, tekst, tekst, xdd",
 						'email_from': "xdd@gmail.com",
 						'sensitivity': "low",
 						'blacklist': ["abc@gmail.com", "xd@gmail.com"]
 						}
 		post_json = json.dumps(post_data)
-		response = requests.post('http://127.0.0.1:8000/antispam/filter/', data=post_json)
-		content = response.content
-		print(content)
+		response = requests.post(url, data=post_json, headers=headers)
+		content = int(str(response.content, 'utf-8'))
 		return redirect('welcome')
 
 class MailDetailView(DetailView):
