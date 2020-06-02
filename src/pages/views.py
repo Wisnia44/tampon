@@ -228,15 +228,41 @@ class SpamSettingsView(View):
 	def get (self, request, *args, **kwargs):
 		obj = MailBox.objects.get(id=kwargs["pk"])
 		blacklist = list(Blacklist.objects.filter(mailbox=obj))
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
 		if not blacklist:
 			blacklist = None
-		return render(request, self.template_name, {"object": obj, "blacklist":blacklist})
+		return render(request, self.template_name, {"object": obj, "blacklist":blacklist, "mailbox": mailbox})
+
+	def get_context_data(self, **kwargs):
+		context = super(SpamSettingsView, self).get_context_data(**kwargs)
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
+		context['mailbox'] = mailbox
+		return context
 
 class SpamStatsView(View):
 	template_name="pages/spam_stats.html"
 	def get (self, request, *args, **kwargs):
 		obj = MailBox.objects.get(id=kwargs["pk"])
-		return render(request, self.template_name, {"object": obj})
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
+		return render(request, self.template_name, {"object": obj, "mailbox": mailbox})
+
+	def get_context_data(self, **kwargs):
+		context = super(SpamStatsView, self).get_context_data(**kwargs)
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
+		context['mailbox'] = mailbox
+		return context
 
 
 
