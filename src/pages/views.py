@@ -252,6 +252,15 @@ class MailListView(ListView):
 			)
 		return Mail.objects.filter(mailbox_id=mailbox.id, spam=False).values()
 
+	def get_context_data(self, **kwargs):
+		context = super(MailListView, self).get_context_data(**kwargs)
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
+		context['mailbox'] = mailbox
+		return context
+
 class SpamListView(ListView):
 	template_name = 'pages/spam_list.html'
 
@@ -261,6 +270,15 @@ class SpamListView(ListView):
 			owner=self.request.user
 			)
 		return Mail.objects.filter(mailbox_id=mailbox.id, spam=True).values()
+
+	def get_context_data(self, **kwargs):
+		context = super(SpamListView, self).get_context_data(**kwargs)
+		mailbox = MailBox.objects.get(
+			name=self.request.user.email.replace('@gmail.com',''),
+			owner=self.request.user
+			)
+		context['mailbox'] = mailbox
+		return context
 
 class MailGetView(ListView):
 	template_name = 'pages/get_mail.html'
