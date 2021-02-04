@@ -29,20 +29,49 @@
 
 <body class="body" style="background-color:#f6f6f6">
 	
-	<div id="auth-check">
-		{% if user.is_authenticated %}
+	{% if user.is_authenticated %}
+		<div id="auth-check">
 			<p class="auth-msg">Cześć, {{ user.username }}. Dzięki, że się zalogowałeś!</p>
-		{% else %}
-			<p class="auth-msg">Cześć, zaloguj się lub utwórz konto!</p>
-		{% endif %}
-	</div>
+		</div>
+		{% block scripts %}
+		{% endblock scripts %}
 
-	{% block scripts %}
-	{% endblock scripts %}
+  		{% block content %}
+  			template nie zaladowany
+		{% endblock %}
+	{% else %}
+		<header>
+			<h1 class="title">TAMP-on</h1>
+			<h6 class="description">TAMP-on to skrzynka antyspamowa wykorzystująca dwa rodzaje silników (Filtr Bayesa oraz czarną listę) pozwalających wyłapywać niechciane wiadomości email.</h6>
+		</header>
+		<br/>
+		<main>
+			<section id="auth-section" class="container-fluid">
+				<h5>
+					<a href="{% url 'social:begin' 'google-oauth2' %}">
+						<button type="button" name="button" class="btn btn-primary btn-lg">Zaloguj się przez konto Google</button>
+					</a>
+				</h5>
+			</section>
+			<br/><br/><br/><br/>
 
-  	{% block content %}
-  		template nie zaladowany
-	{% endblock %}
+			<footer class="footer text-left">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm">
+							<h4 class="font-weight-normal">Jak to działa?</h4>
+							<p class="font-weight-light">Pierwszym zastosowanym rozwiązaniem jest naiwny klasyfikator bayesa bazujący na algorytmach sztucznej inteligencji. Z wykorzystaniem rachunku prawdopodobieństwa oraz twierdzenia Bayesa pozwala wydajnie wykrywać niechciane wiadomości. 
+							Drugą techniką wykorzystywaną przez naszą skrzynkę jest Czarna Lista, która wedle życzenia użytkownika blokuje wszystkie wiadomości od wybranego przez użytkownika adresu email.</p>
+						</div>
+						<div class="col-sm">
+							<h4 class="font-weight-normal">O nas:</h4>
+							<p class="font-weight-light">Jesteśmy grupą studentów którzy stawiają swoje pierwsze kroki w tworzeniu aplikacji webowych. W ramach nauki i projektu grupowego stworzyliśmy własną skrzynkę mailową TAMP-on.</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</main>
+	{% endif %}
 	  
 	<!--bootstrap scripts-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
