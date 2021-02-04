@@ -1,42 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<body class="body">
-	
 	<header>
 		<h1 class="title">TAMP-on</h1>
-		<h6 class="description">TAMP-on to skrzynka antyspamowa wykorzystująca dwa rodzaje silników (Filtr Bayesa oraz czarną listę) pozwalających wyłapywać niechciane wiadomości email.</h6>
 	</header>
+
+	<section class="menu">
+		<ul class="list-group">
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="{% url 'mail-list' %}">Twoje maile</a></li>
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="{% url 'spam-list' %}">Twój spam</a></li>
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="../spam-stats/{{mailbox.id}}/">Statystyki antyspamowe</a></li>
+			<li><a class="font-weight-bold list-group-item list-group-item-action" 
+				href="../spam-settings/{{mailbox.id}}/">Ustawienia antyspamowe</a></li>
+			<li><a class="list-group-item list-group-item-action" 
+				href="{% url 'user-update' %}">Zmień swoje dane</a></li>
+			<li><a class="list-group-item list-group-item-action" 
+				href="{% url 'change-password' %}">Zmień hasło</a></li>
+			<li><a class="list-group-item list-group-item-action" 
+				href="{% url 'user-delete' %}">Usuń swoje konto</a></li>
+		</ul>
+	</section>
+
 	<br/>
-	
-	<main>
-
-		<section id="auth-section" class="container-fluid">
-			<h5>
-				<a href="{% url 'social:begin' 'google-oauth2' %}">
-					<button type="button" name="button" class="btn btn-primary btn-lg">Zaloguj się przez konto Google</button>
-				</a>
-			</h5>
-		</section>
-		<br/><br/><br/><br/>
-
-		<footer class="footer text-left">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm">
-						<h4 class="font-weight-normal">Jak to działa?</h4>
-						<p class="font-weight-light">Pierwszym zastosowanym rozwiązaniem jest naiwny klasyfikator bayesa bazujący na algorytmach sztucznej inteligencji. Z wykorzystaniem rachunku prawdopodobieństwa oraz twierdzenia Bayesa pozwala wydajnie wykrywać niechciane wiadomości. 
-							Drugą techniką wykorzystywaną przez naszą skrzynkę jest Czarna Lista, która wedle życzenia użytkownika blokuje wszystkie wiadomości od wybranego przez użytkownika adresu email.</p>
-					</div>
-					<div class="col-sm">
-						<h4 class="font-weight-normal">O nas:</h4>
-						<p class="font-weight-light">Jesteśmy grupą studentów którzy stawiają swoje pierwsze kroki w tworzeniu aplikacji webowych. W ramach nauki i projektu grupowego stworzyliśmy własną skrzynkę mailową TAMP-on.</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-
-	</main>
-
-</body>
+	<form class="logout-link" action="{% url 'logout' %}" method="post">
+		{% csrf_token %}
+		<button class="btn btn-outline-dark" type="submit">Wyloguj się</button>
+	</form>
 {% endblock %}

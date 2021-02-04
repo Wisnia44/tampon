@@ -26,7 +26,7 @@ SECRET_KEY = 'reallysecretkey'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0',]
+ALLOWED_HOSTS = ['127.0.0.1',]
 
 
 # Application definition
@@ -102,12 +102,8 @@ WSGI_APPLICATION = 'tampon.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -150,5 +146,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+#Social auth settings
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '295702391710-nbgf3bnr9tncldjuq7jetehn9kva5b2r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '25EkItAUdQ_pf_NWmCZMqNey'
 LOGIN_REDIRECT_URL = 'create-mailbox'
 LOGIN_URL = 'user-login'
+LOGOUT_REDIRECT_URL = '/'
