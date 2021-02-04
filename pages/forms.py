@@ -43,3 +43,4 @@ class BlacklistModelForm(forms.ModelForm):
     class Meta:
         model = Blacklist
         fields = ['address']
+        

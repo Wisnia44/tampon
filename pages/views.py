@@ -126,8 +126,6 @@ class UserChangePassword(View):
 		return render(request, self.template_name, {'form': form})
 
 
-
-
 #Main views
 class WelcomeView (View):
 	template_name = 'pages/welcome.html'
@@ -152,8 +150,6 @@ class NotOwnerView (View):
 	template_name = 'pages/not_owner.html'
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
-
-
 
 
 #Blacklist based views
@@ -199,8 +195,6 @@ class BlacklistDeleteView(DeleteView):
 
 	def get_success_url(self):
 		return reverse('home')
-
-
 
 
 #MailBox based views
@@ -263,8 +257,6 @@ class SpamStatsView(View):
 			)
 		context['mailbox'] = mailbox
 		return context
-
-
 
 
 #Mail based views
@@ -429,7 +421,6 @@ class MailDetailView(DetailView):
 	def get_queryset(self):
 		return Mail.objects.all()
 
-	
 	def get_context_data(self, **kwargs):
 		context = super(MailDetailView, self).get_context_data(**kwargs)
 		mailbox = MailBox.objects.get(
@@ -476,3 +467,4 @@ class MailChangeSpamLabelView(View):
 		mailbox[0].refresh_from_db()
 		ad = obj[0].get_absolute_url()
 		return redirect(ad)
+		

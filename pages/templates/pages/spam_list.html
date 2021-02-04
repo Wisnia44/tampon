@@ -2,13 +2,10 @@
 
 {% block content %}
 
-
 <header>
 	<h1 class="title" >TAMP-on</h1>
 </header> 
 <br/>
-
-
 
 <div class="container-fluid">
 	<div class="row">
@@ -45,9 +42,7 @@
 								href="{% url 'get-mail' %}">Pobierz pocztę</a>
 					</div>
 				</div>
-				
 				<br/>
-
 				<div class="table table-responsive">
 					<table class="table table-hover table-bordered my-table">
 						<tbody >
@@ -75,45 +70,6 @@
 		</div>
 	</div>	
 </div>
-
-<!--
-<div class="row">
-	<div class="col-sm-3">
-		<h2> Twój spam </h2>
-	</div>
-	<div class="col-sm-3">
-		<a class="list-group-item list-group-item-action list-group-item-primary" 
-			href="{% url 'get-mail' %}">Pobierz pocztę</a>
-	</div>
-</div>
-<br/>
-
-
-<div class="row">
-	<div class="table table-responsive">
-		<tbody >
-
-			{% for mail in object_list %}
-				<tr>
-					<td style="width:25%" scope="row">
-						<div class="small font-weight-bold" >
-							{{ mail.from_header }}
-						</div>
-					</td>
-
-					<td style="width:70%">
-						<a class="font-weight-bold" href="../{{mail.id}}/"> 
-							{{ mail.subject }} 
-						</a>
-					</td>				
-				</tr>
-			{% endfor %}
-
-		</tbody>
-	</div>
-	
-</div>  -->
-
 
 <a class="btn btn-outline-secondary" href="{% url 'home' %}">
 	Powrót do strony głównej

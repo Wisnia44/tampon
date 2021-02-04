@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
 <header>
 	<h1 class="title" >TAMP-on</h1>
 </header> 
@@ -29,7 +28,6 @@
 				</ul>
 			</section>	
 		</div>
-
 	
 		<!--LISTA maili po lewej-->
 			<div class="col">
@@ -42,9 +40,7 @@
 								href="{% url 'get-mail' %}">Pobierz pocztę</a>
 					</div>
 				</div>
-				
 				<br/>
-
 				<div class="table table-responsive">
 					<table class="table table-hover table-bordered my-table">
 						<tbody >
@@ -60,25 +56,19 @@
 									<a class="font-weight-bold" href="../{{mail.id}}/"> 
 										{{ mail.subject }} 
 									</a>
-								</td>
-								
+								</td>			
 							</tr>
-			
 							{% endfor %}
 						</tbody>
 					</table>
 				</div>
-
 		</div>
 	</div>	
 </div>
-
 
 <br/>
 <a class="btn btn-outline-secondary" href="{% url 'home' %}">
 	Powrót do strony głównej
 </a>
-
-
 
 {% endblock %}

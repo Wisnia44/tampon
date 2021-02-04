@@ -6,7 +6,6 @@ from django.urls import reverse
 from rest_framework.reverse import reverse as api_reverse
 from picklefield.fields import PickledObjectField
 
-
 # Create your models here.
 class MailBox (Mailbox):
 	""" 
@@ -91,3 +90,4 @@ class Blacklist(models.Model):
 	def get_owner(self):
 		obj = MailBox.objects.get(id=self.mailbox)
 		return obj.owner
+		

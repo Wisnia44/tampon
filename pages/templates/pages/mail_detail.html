@@ -13,16 +13,11 @@
 			<div class="col-8 " >
 				<p class="text-white-bg align-middle">{{ object.from_header }} </p>
 			</div>
-
 			<div class="col-2 ">
 				<a class="btn btn-danger " 
 				href='../{{object.id}}/delete/'>Usuń</a>
 			</div>
-			
-		</div>
-
-
-	
+		</div>	
 		<div class="row">
 			<div class="col-2">
 				<p class="text-white-bg font-weight-bold"> Temat: </p>
@@ -30,20 +25,13 @@
 			<div class="col-10 " >
 				<p class="text-white-bg font-weight-bold">{{ object.subject }} </p>
 			</div>
-		
-
 		</div>
-		
-
 		<div class="row">
 			<div class="col mail-container" >
 			<p class="mail-content text-white-bg ">{{object.snippet}} </p>
-		</div>
-		
+		</div>	
 	</div>
 		
-
-
 	<div class="container-fluid text-left center">
 		<!-- spam check -->
 		<div class="row">
@@ -68,7 +56,6 @@
 
 
 		<script>
-
 			/*spam send */
 			function loadSpam() {
 					var xhttp = new XMLHttpRequest();
@@ -128,9 +115,7 @@
 			
 			var btn = document.getElementById("test-button");
 			btn.addEventListener("click", loadSpam) ;
-
 		</script>
-
 
 
 		<br/>
@@ -146,8 +131,6 @@
 			</div>
 
 		</div>
-
 	</div>
 	
-
 {% endblock %}

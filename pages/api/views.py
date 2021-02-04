@@ -10,3 +10,4 @@ class MailBoxCreateView (generics.CreateAPIView):
 	
 	def get_serializer_context(self, *args, **kwargs):
 		return {"request": self.request}
+		
