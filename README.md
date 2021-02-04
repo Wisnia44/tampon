@@ -1,10 +1,8 @@
 # TAMP-on
-### Anti-spam web app for Gmail Accounts.
-
-Uses: Django, Django Rest Framework, OAuth2.0 <br/> 
+### Anti-spam web app for Gmail Accounts. 
 
 In order to use **full funcionality** of the app you have to configure settings in Google Developers Console! <br/>
-Currently it's using settings which do not allow accessing your messages by third parties.
+Currently it's using settings which **do not allow** accessing your messages by third parties.
 
 **Using instruction:**
 1. Clone this repository;
